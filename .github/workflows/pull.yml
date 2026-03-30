@@ -1,0 +1,8 @@
+version: "1"
+rules:
+  - base: main
+    upstream: cipp-ashe:main
+    mergeMethod: merge
+  - base: dev
+    upstream: cipp-ashe:dev
+    mergeMethod: merge
