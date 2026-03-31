@@ -96,7 +96,7 @@ HELPER_FUNCTION_IGNORE: set[str] = {
 }
 
 # Regex to normalize Graph URLs to OAS path form
-# Strips base URL, collapses GUIDs and specific IDs to {id}
+# Strips the Graph base URL and version prefix, capturing the remaining path
 GRAPH_URL_NORMALIZE_RE: str = r'https://graph\.microsoft\.com/(?:v1\.0|beta)(.+)'
 
 # ── Example hints ─────────────────────────────────────────────────────────────
