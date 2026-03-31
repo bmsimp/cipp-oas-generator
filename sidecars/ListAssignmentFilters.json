@@ -17,7 +17,7 @@
       "description": "Query parameter from PS1: filterId"
     }
   ],
-  "override_method": "POST",
+  "override_methods": ["POST"],
   "parameters": [
     {
       "name": "tenantFilter",

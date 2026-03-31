@@ -11,7 +11,7 @@
     }
   ],
   "description": "List community repositories in Table Storage",
-  "override_method": "POST",
+  "override_methods": ["POST"],
   "parameters": [
     {
       "name": "WriteAccess",

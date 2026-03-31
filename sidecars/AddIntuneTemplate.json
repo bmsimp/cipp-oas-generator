@@ -80,7 +80,7 @@
       "description": "Body parameter from PS1: ODataType"
     }
   ],
-  "override_method": "POST",
+  "override_methods": ["POST"],
   "parameters": [
     {
       "name": "tenantFilter",

@@ -1,7 +1,7 @@
 {
   "override_confidence": "high",
   "_comment": "Auto-generated from: CippWizardAppApproval (5 fields)",
-  "override_method": "POST",
+  "override_methods": ["POST"],
   "parameters": [
     {
       "name": "configMode",

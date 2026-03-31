@@ -27,7 +27,6 @@ from pathlib import Path
 from config import (
     OUT_DIR, SIDECARS_DIR, SHARED_PARAM_REFS, FRONTEND_NOISE,
     COVERAGE_TIERS, KNOWN_URL_ALIASES, KNOWN_NON_PS1_ENDPOINTS,
-    PASSTHRU_ENDPOINTS,
 )
 
 # ── Sidecar schema (validated on load) ───────────────────────────────────────
@@ -79,6 +78,22 @@ def validate_sidecar(sidecar: dict, endpoint: str) -> list[str]:
               raw_request_body present alongside add_params (ambiguous authority).
     """
     warnings: list[str] = []
+
+    # ── Normalize legacy singular override_method → override_methods ─────
+    if "override_method" in sidecar and "override_methods" not in sidecar:
+        method = sidecar.pop("override_method")
+        sidecar["override_methods"] = [method] if isinstance(method, str) else method
+        warnings.append(
+            f"override_method (singular) is deprecated — migrated to override_methods. "
+            f"Update the sidecar JSON to use override_methods: {sidecar['override_methods']}"
+        )
+    elif "override_method" in sidecar and "override_methods" in sidecar:
+        sidecar.pop("override_method")
+        warnings.append(
+            "Both override_method and override_methods present — "
+            "override_method ignored in favor of override_methods"
+        )
+
     unknown_keys = set(sidecar) - _SIDECAR_ALLOWED_KEYS
     if unknown_keys:
         warnings.append(f"Unknown sidecar keys (ignored): {sorted(unknown_keys)}")
@@ -159,6 +174,17 @@ def validate_sidecar(sidecar: dict, endpoint: str) -> list[str]:
         for m in sidecar["override_methods"]:
             if m.upper() not in valid_methods:
                 warnings.append(f"override_methods: unrecognised HTTP method '{m}'")
+
+    # ── add_passthru_variants ────────────────────────────────────────────
+    for i, pv in enumerate(sidecar.get("add_passthru_variants", [])):
+        if not isinstance(pv, dict):
+            raise ValueError(
+                f"Sidecar {endpoint}: add_passthru_variants[{i}] must be a dict"
+            )
+        if "endpoint_value" not in pv:
+            raise ValueError(
+                f"Sidecar {endpoint}: add_passthru_variants[{i}] missing required key 'endpoint_value'"
+            )
 
     # ── x_cipp_warnings ───────────────────────────────────────────────────
     if "x_cipp_warnings" in sidecar:
@@ -497,7 +523,9 @@ def _merge_sidecar_passthru_variants(passthru_ep: dict, sidecar: dict) -> None:
         return
 
     # Index existing variants by endpoint_value for replacement
-    existing = {v["endpoint_value"]: i for i, v in enumerate(passthru_ep["variants"])}
+    variants = passthru_ep.get("variants", [])
+    passthru_ep["variants"] = variants
+    existing = {v["endpoint_value"]: i for i, v in enumerate(variants)}
 
     for sv in sidecar_variants:
         ev = sv["endpoint_value"]

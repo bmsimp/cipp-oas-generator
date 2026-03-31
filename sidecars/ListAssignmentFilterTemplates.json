@@ -10,7 +10,7 @@
       "description": "Query parameter from PS1: ID"
     }
   ],
-  "override_method": "POST",
+  "override_methods": ["POST"],
   "parameters": [
     {
       "name": "ID",

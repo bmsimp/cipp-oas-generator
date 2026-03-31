@@ -31,7 +31,7 @@
       "description": "Query parameter from PS1: id"
     }
   ],
-  "override_method": "POST",
+  "override_methods": ["POST"],
   "parameters": [
     {
       "name": "View",

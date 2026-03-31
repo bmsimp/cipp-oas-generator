@@ -249,14 +249,15 @@ def build_passthru_resolved(
             else:
                 # Add request schema with discriminator const
                 req = variant.get("request_schema")
+                existing_required = req.get("required", []) if req else []
                 variant["request_schema"] = {
+                    "type": "object",
                     "properties": {
                         "Endpoint": {"const": entry["url"]},
                         **(req.get("properties", {}) if req else {}),
-                    }
+                    },
+                    "required": list({*existing_required, "Endpoint"}),
                 }
-                if req and req.get("required"):
-                    variant["request_schema"]["required"] = req["required"]
                 variants.append(variant)
 
         resolved[ep_name] = {

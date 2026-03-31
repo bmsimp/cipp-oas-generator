@@ -73,7 +73,7 @@
       "description": "Body parameter from PS1: AssignmentFilterType"
     }
   ],
-  "override_method": "POST",
+  "override_methods": ["POST"],
   "parameters": [
     {
       "name": "TemplateList",
