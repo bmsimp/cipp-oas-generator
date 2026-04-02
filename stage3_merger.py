@@ -1009,6 +1009,8 @@ def run(endpoint_filter: str | None = None) -> dict:
     # Write — single-endpoint runs go to separate files to preserve corpus output
     suffix = f"-{endpoint_filter}" if endpoint_filter else ""
     (OUT_DIR / f"merged-params{suffix}.json").write_text(json.dumps(merged_file_output, indent=2))
+    mismatch_output = {"mismatches": all_mismatches}
+    (OUT_DIR / f"mismatch-report{suffix}.json").write_text(json.dumps(mismatch_output, indent=2))
     if not endpoint_filter:
         (OUT_DIR / "coverage-report.json").write_text(json.dumps(coverage_file_output, indent=2))
 

@@ -490,7 +490,8 @@ def _emit_passthru_request_body(passthru_resolved: dict) -> dict:
     one_of = []
     for v in variants:
         schema = dict(v.get("request_schema", {}))
-        schema["title"] = f"GET {v['endpoint_value']}"
+        method = v.get("method", "GET")
+        schema["title"] = f"{method} {v['endpoint_value']}"
         one_of.append(schema)
 
     return {
@@ -515,7 +516,8 @@ def _emit_passthru_response(passthru_resolved: dict) -> dict:
         if resp is None:
             continue
         schema = dict(resp)
-        schema["title"] = f"GET {v['endpoint_value']}"
+        method = v.get("method", "GET")
+        schema["title"] = f"{method} {v['endpoint_value']}"
         one_of.append(schema)
 
     return {
@@ -633,7 +635,7 @@ def build_path_entry(ep: dict, verbose: bool = False) -> dict:
                     item_schema = select_fields_to_schema(sel_fields)
                 else:
                     # No $select — look up the full Graph schema for this resource path
-                    norm_path = "/" + resource.rstrip("/")
+                    norm_path = "/" + resource.strip("/")
                     norm_path = re.sub(r'\{[^}]+\}', '{id}', norm_path)
                     graph_key = f"GET {norm_path}"
                     cached = _GRAPH_RESPONSES.get(graph_key)

@@ -258,6 +258,7 @@ def build_passthru_resolved(
                     },
                     "required": list({*existing_required, "Endpoint"}),
                 }
+                variant["method"] = entry["method"]
                 variants.append(variant)
 
         resolved[ep_name] = {
