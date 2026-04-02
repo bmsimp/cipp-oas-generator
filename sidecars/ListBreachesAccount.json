@@ -13,14 +13,5 @@
       "description": "Query parameter from PS1: account"
     }
   ],
-  "trust_level": "reversed",
-  "parameters": [
-    {
-      "name": "account",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Query parameter from PS1: account"
-    }
-  ]
+  "trust_level": "reversed"
 }

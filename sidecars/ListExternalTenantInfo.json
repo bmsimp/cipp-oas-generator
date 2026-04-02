@@ -4,7 +4,7 @@
     "GET"
   ],
   "_comment": "Enriched with PS1 data on 2026-03-02 | Enriched 2026-03-25",
-  "notes": "ORPHAN \u2014 frontend calls /api/ListExternalTenantInfo (CippTenantLookup.jsx) but no PS1 exists. External tenant lookup is frontend-only as of v10.1.x.",
+  "notes": "ORPHAN — frontend calls /api/ListExternalTenantInfo (CippTenantLookup.jsx) but no PS1 exists. External tenant lookup is frontend-only as of v10.1.x.",
   "add_params": [
     {
       "name": "tenant",
@@ -14,14 +14,5 @@
       "description": "Query parameter from PS1: tenant"
     }
   ],
-  "trust_level": "reversed",
-  "parameters": [
-    {
-      "name": "tenant",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Query parameter from PS1: tenant"
-    }
-  ]
+  "trust_level": "reversed"
 }

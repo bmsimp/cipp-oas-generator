@@ -17,70 +17,7 @@
       "description": "Query parameter from PS1: ID"
     }
   ],
-  "override_methods": ["POST"],
-  "parameters": [
-    {
-      "name": "id",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Query parameter from PS1: id"
-    },
-    {
-      "name": "ID",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Query parameter from PS1: ID"
-    },
-    {
-      "name": "TemplateList",
-      "in": "body",
-      "required": false,
-      "type": "object",
-      "description": "Choose a Template"
-    },
-    {
-      "name": "groupType",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Group Type"
-    },
-    {
-      "name": "displayName",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Group Display Name"
-    },
-    {
-      "name": "description",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Group Description"
-    },
-    {
-      "name": "username",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Group Username"
-    },
-    {
-      "name": "allowExternal",
-      "in": "body",
-      "required": false,
-      "type": "boolean",
-      "description": "Allow external emails to the group"
-    },
-    {
-      "name": "membershipRules",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Membership Rules"
-    }
+  "override_methods": [
+    "POST"
   ]
 }

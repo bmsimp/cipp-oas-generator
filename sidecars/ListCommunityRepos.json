@@ -11,31 +11,7 @@
     }
   ],
   "description": "List community repositories in Table Storage",
-  "override_methods": ["POST"],
-  "parameters": [
-    {
-      "name": "WriteAccess",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Query parameter from PS1: WriteAccess"
-    },
-    {
-      "name": "baselineOption",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Choose an option"
-    },
-    {
-      "name": "selectedBaselines",
-      "in": "body",
-      "required": false,
-      "type": "array",
-      "description": "Select Baselines",
-      "items": {
-        "type": "object"
-      }
-    }
+  "override_methods": [
+    "POST"
   ]
 }

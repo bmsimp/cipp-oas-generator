@@ -4,7 +4,7 @@
     "GET"
   ],
   "_comment": "Enriched with PS1 data on 2026-03-02 | Enriched 2026-03-25",
-  "notes": "PROBABLE 404 \u2014 frontend calls /api/ListUsersAndGroups (CippFormUserAndGroupSelector.jsx) but no Invoke-ListUsersAndGroups.ps1 exists. PS1 is Invoke-ListDirectoryObjects in CIPP/Core. Failure mode: user+group selector shows empty results. Fix: rename PS1 or update frontend URL.",
+  "notes": "PROBABLE 404 — frontend calls /api/ListUsersAndGroups (CippFormUserAndGroupSelector.jsx) but no Invoke-ListUsersAndGroups.ps1 exists. PS1 is Invoke-ListDirectoryObjects in CIPP/Core. Failure mode: user+group selector shows empty results. Fix: rename PS1 or update frontend URL.",
   "add_params": [
     {
       "name": "TenantFilter",
@@ -14,14 +14,5 @@
       "description": "Query parameter from PS1: TenantFilter"
     }
   ],
-  "trust_level": "reversed",
-  "parameters": [
-    {
-      "name": "TenantFilter",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Query parameter from PS1: TenantFilter"
-    }
-  ]
+  "trust_level": "reversed"
 }

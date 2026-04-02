@@ -5,7 +5,7 @@
     "POST"
   ],
   "_comment": "Enriched with PS1 data on 2026-03-02 | Enriched 2026-03-25",
-  "notes": "ORPHAN \u2014 frontend calls /api/ExecCSPLicense (src/pages/tenant/administration/add-subscription/index.jsx) but no PS1 exists. CSP licensing/subscription management is frontend-only as of v10.1.x.",
+  "notes": "ORPHAN — frontend calls /api/ExecCSPLicense (src/pages/tenant/administration/add-subscription/index.jsx) but no PS1 exists. CSP licensing/subscription management is frontend-only as of v10.1.x.",
   "add_params": [
     {
       "name": "Action",
@@ -50,49 +50,5 @@
       "description": "Body parameter from PS1: SubscriptionIds"
     }
   ],
-  "trust_level": "reversed",
-  "parameters": [
-    {
-      "name": "Action",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: Action"
-    },
-    {
-      "name": "SKU",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: SKU"
-    },
-    {
-      "name": "Add",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: Add"
-    },
-    {
-      "name": "Remove",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: Remove"
-    },
-    {
-      "name": "Quantity",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: Quantity"
-    },
-    {
-      "name": "SubscriptionIds",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: SubscriptionIds"
-    }
-  ]
+  "trust_level": "reversed"
 }

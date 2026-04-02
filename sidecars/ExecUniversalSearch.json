@@ -4,7 +4,7 @@
     "GET"
   ],
   "_comment": "Enriched with PS1 data on 2026-03-02 | Enriched 2026-03-25",
-  "notes": "ORPHAN \u2014 frontend calls /api/ExecUniversalSearch (src/components/CippCards/CippUniversalSearch.jsx) but no PS1 exists. Universal search feature is frontend-only as of v10.1.x.",
+  "notes": "ORPHAN — frontend calls /api/ExecUniversalSearch (src/components/CippCards/CippUniversalSearch.jsx) but no PS1 exists. Universal search feature is frontend-only as of v10.1.x.",
   "add_params": [
     {
       "name": "name",
@@ -14,14 +14,5 @@
       "description": "Query parameter from PS1: name"
     }
   ],
-  "trust_level": "reversed",
-  "parameters": [
-    {
-      "name": "name",
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Query parameter from PS1: name"
-    }
-  ]
+  "trust_level": "reversed"
 }

@@ -4,7 +4,7 @@
     "POST"
   ],
   "_comment": "Enriched with PS1 data on 2026-03-02 | Enriched 2026-03-25",
-  "notes": "ORPHAN \u2014 frontend calls /api/ExecUserSettings (CippSettingsSideBar.jsx) but no PS1 exists. User settings persistence is frontend-only as of v10.1.x.",
+  "notes": "ORPHAN — frontend calls /api/ExecUserSettings (CippSettingsSideBar.jsx) but no PS1 exists. User settings persistence is frontend-only as of v10.1.x.",
   "add_params": [
     {
       "name": "currentSettings",
@@ -21,21 +21,5 @@
       "description": "Body parameter from PS1: user"
     }
   ],
-  "trust_level": "reversed",
-  "parameters": [
-    {
-      "name": "currentSettings",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: currentSettings"
-    },
-    {
-      "name": "user",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: user"
-    }
-  ]
+  "trust_level": "reversed"
 }

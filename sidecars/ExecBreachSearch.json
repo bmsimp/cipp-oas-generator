@@ -13,14 +13,5 @@
       "description": "Body parameter from PS1: tenantFilter"
     }
   ],
-  "trust_level": "reversed",
-  "parameters": [
-    {
-      "name": "tenantFilter",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: tenantFilter"
-    }
-  ]
+  "trust_level": "reversed"
 }
