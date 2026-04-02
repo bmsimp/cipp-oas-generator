@@ -19,7 +19,7 @@ import hashlib
 import argparse
 from pathlib import Path
 from config import (
-    API_REPO, HTTP_FUNCTIONS_ROOT, OUT_DIR, SIDECARS_DIR,
+    API_REPO, HTTP_FUNCTIONS_ROOT, EXTRA_ENTRYPOINT_PATHS, OUT_DIR, SIDECARS_DIR,
     DOWNSTREAM_PATTERNS, PARAM_NOISE, PS_NOISE
 )
 
@@ -404,7 +404,8 @@ def scan_endpoint(ps1_path: Path) -> dict | None:
 def run(endpoint_filter: str | None = None) -> dict:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    ps1_files = sorted(HTTP_FUNCTIONS_ROOT.rglob("Invoke-*.ps1"))
+    scan_roots = [HTTP_FUNCTIONS_ROOT] + list(EXTRA_ENTRYPOINT_PATHS)
+    ps1_files = sorted({p for root in scan_roots for p in root.rglob("Invoke-*.ps1")})
     if not ps1_files:
         raise RuntimeError(f"No Invoke-*.ps1 files found under {HTTP_FUNCTIONS_ROOT}. Check CIPP_API_REPO.")
 

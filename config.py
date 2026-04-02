@@ -26,6 +26,12 @@ API_REPO      = Path(os.environ.get("CIPP_API_REPO",      str(_api_repo_default)
 FRONTEND_REPO = Path(os.environ.get("CIPP_FRONTEND_REPO", str(_fe_repo_default)))
 
 HTTP_FUNCTIONS_ROOT = API_REPO / "Modules/CIPPCore/Public/Entrypoints"
+
+# Entrypoint functions that live outside Entrypoints/ due to deliberate colocation.
+# Stage 1 walks these in addition to HTTP_FUNCTIONS_ROOT.
+EXTRA_ENTRYPOINT_PATHS: list[Path] = [
+    API_REPO / "Modules/CIPPCore/Public/CippQueue",
+]
 FRONTEND_SRC_ROOT   = FRONTEND_REPO / "src"
 
 # ── Output / sidecar paths ────────────────────────────────────────────────────
