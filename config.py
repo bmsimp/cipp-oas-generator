@@ -25,7 +25,7 @@ _fe_repo_default = _fe_candidate_a if _fe_candidate_a.exists() else _fe_candidat
 API_REPO      = Path(os.environ.get("CIPP_API_REPO",      str(_api_repo_default)))
 FRONTEND_REPO = Path(os.environ.get("CIPP_FRONTEND_REPO", str(_fe_repo_default)))
 
-HTTP_FUNCTIONS_ROOT = API_REPO / "Modules/CIPPCore/Public/Entrypoints"
+HTTP_FUNCTIONS_ROOT = API_REPO / "Modules/CIPPHTTP/Public/Entrypoints"
 
 # Entrypoint functions that live outside Entrypoints/ due to deliberate colocation.
 # Stage 1 walks these in addition to HTTP_FUNCTIONS_ROOT.

@@ -1,6 +1,6 @@
 {
   "override_confidence": "high",
-  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 15 params | Enriched 2026-03-02",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 15 params | Enriched 2026-03-02 | Descriptions updated 2026-06-03",
   "description": "Just-in-time admin management API endpoint. This function can create users, add roles, remove roles, delete, or disable a user.",
   "add_params": [
     {
@@ -8,7 +8,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "AdminRoles parameter",
+      "description": "Array of admin roles to assign. LabelValue shape: { \"label\": \"Role Display Name\", \"value\": \"<ObjectId>\" }. The value must be the role's ObjectId (GUID). Retrieve available roles from GET /api/ListRoles?TenantFilter=<tenant>.",
       "confidence": "high"
     },
     {
@@ -16,7 +16,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "Domain parameter",
+      "description": "Domain for the new user's UPN. Required when userAction=\"create\". Accepts a LabelValue object ({ \"label\": \"contoso.com\", \"value\": \"contoso.com\" }) or a plain domain string. PS1 unwraps .value with fallback to the raw string.",
       "confidence": "high"
     },
     {
@@ -24,7 +24,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "EndDate parameter",
+      "description": "Unix timestamp (seconds) for when the JIT access expires. The scheduler removes/disables the user at this time per ExpireAction.",
       "confidence": "high",
       "format": "date-time"
     },
@@ -33,7 +33,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "existingUser parameter",
+      "description": "Target user when userAction=\"select\". LabelValue shape: { \"label\": \"User Display Name\", \"value\": \"<UPN or ObjectId>\" }. If value is a GUID (ObjectId), the PS1 resolves it to a UPN automatically via Graph. Required when userAction=\"select\".",
       "confidence": "high"
     },
     {
@@ -41,7 +41,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "ExpireAction parameter",
+      "description": "Action to perform when JIT access expires. LabelValue shape: { \"label\": \"...\", \"value\": \"<action>\" }. Valid values: \"DisableUser\" (disable the account), \"DeleteUser\" (permanently delete), \"RemoveRoles\" (userAction=select only), \"RemoveGroups\" (userAction=select only), \"RemoveRolesAndGroups\" (userAction=select only). Accepts a plain string instead of a LabelValue object.",
       "confidence": "high"
     },
     {
@@ -49,7 +49,15 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "FirstName parameter",
+      "description": "First name for the new user. Required when userAction=\"create\".",
+      "confidence": "high"
+    },
+    {
+      "name": "GroupMemberships",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "Array of groups to add the user to. LabelValue shape: { \"label\": \"Group Display Name\", \"value\": \"<ObjectId>\" }. The value must be the group's ObjectId (GUID). Used when ExpireAction includes group removal.",
       "confidence": "high"
     },
     {
@@ -57,7 +65,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "jitAdminTemplate parameter",
+      "description": "Template to pre-populate defaults from. LabelValue shape: { \"label\": \"Template Name\", \"value\": \"<GUID>\" }. Retrieve available templates from GET /api/ListJITAdminTemplates?TenantFilter=<tenant>.",
       "confidence": "high"
     },
     {
@@ -65,7 +73,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "LastName parameter",
+      "description": "Last name for the new user. Required when userAction=\"create\".",
       "confidence": "high"
     },
     {
@@ -73,7 +81,7 @@
       "in": "body",
       "required": false,
       "type": "array",
-      "description": "PostExecution parameter",
+      "description": "Notification actions to trigger after JIT access is granted. Array of strings. Valid values: \"Webhook\", \"email\", \"PSA\".",
       "confidence": "high"
     },
     {
@@ -81,7 +89,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "reason parameter",
+      "description": "Justification text for why JIT access is being granted. Stored on the JIT admin record.",
       "confidence": "high"
     },
     {
@@ -89,16 +97,24 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "StartDate parameter",
+      "description": "Unix timestamp (seconds) for when JIT access begins. Defaults to immediate if omitted.",
       "confidence": "high",
       "format": "date-time"
+    },
+    {
+      "name": "tapLifetimeInMinutes",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Lifetime of the Temporary Access Pass in minutes. Only used when UseTAP=true. Must be within the tenant's TAP policy limits. Omit to use the tenant default.",
+      "confidence": "high"
     },
     {
       "name": "tenantFilter",
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "tenantFilter parameter",
+      "description": "Target tenant domain or GUID. Required.",
       "confidence": "high"
     },
     {
@@ -106,7 +122,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "userAction parameter",
+      "description": "Whether to create a new user or target an existing one. \"create\" requires FirstName, LastName, username, Domain. \"select\" requires existingUser.",
       "confidence": "high",
       "enum": [
         "create",
@@ -114,11 +130,19 @@
       ]
     },
     {
+      "name": "usageLocation",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "Usage location for the new user (required by Microsoft for license assignment). LabelValue shape: { \"label\": \"Country Name\", \"value\": \"<ISO 3166-1 alpha-2 code>\" } — e.g. { \"label\": \"Canada\", \"value\": \"CA\" }. Accepts a plain country code string. Only used when userAction=\"create\".",
+      "confidence": "high"
+    },
+    {
       "name": "username",
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "username parameter",
+      "description": "Username prefix (without domain) for the new user. Combined with Domain to form the UPN. Required when userAction=\"create\".",
       "confidence": "high"
     },
     {
@@ -126,24 +150,10 @@
       "in": "body",
       "required": false,
       "type": "boolean",
-      "description": "UseTAP parameter",
+      "description": "If true, generates a Temporary Access Pass instead of a password for the new user. Only applicable when userAction=\"create\".",
       "confidence": "high"
-    },
-    {
-      "name": "Username",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: Username"
-    },
-    {
-      "name": "Reason",
-      "in": "body",
-      "required": false,
-      "type": "string",
-      "description": "Body parameter from PS1: Reason"
     }
   ],
   "trust_level": "verified",
-  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence. GroupMemberships and usageLocation and tapLifetimeInMinutes added 2026-06-03 — were present in PS1/frontend but missing from sidecar. ExpireAction valid values sourced from frontend add.jsx. Duplicate Username/Reason entries removed (covered by username and reason params)."
 }

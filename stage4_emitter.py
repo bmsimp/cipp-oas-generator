@@ -197,10 +197,15 @@ def make_schema(param: dict) -> dict:
 
     # Param-level type (from sidecar or Stage 2 type inference)
     param_type = param.get("type")
+    desc = param.get("description")
     if param_type:
-        # Schema $ref names
+        # Schema $ref names — use allOf to carry description when present
         if param_type in _REF_TYPES:
-            return {"$ref": f"#/components/schemas/{param_type}"}
+            ref_schema = {"$ref": f"#/components/schemas/{param_type}"}
+            if desc:
+                # allOf lets description live alongside $ref (OAS 3.1 compliant)
+                return {"allOf": [ref_schema], "description": desc}
+            return ref_schema
 
         # Array — preserve items schema if provided
         if param_type == "array":
@@ -208,7 +213,10 @@ def make_schema(param: dict) -> dict:
             if not items_schema:
                 items_schema = {"type": "string"}
             # If items is itself a $ref shape, keep it clean
-            return {"type": "array", "items": items_schema}
+            schema = {"type": "array", "items": items_schema}
+            if desc:
+                schema["description"] = desc
+            return schema
 
         # Scalar types
         schema: dict = {"type": param_type}
@@ -216,6 +224,8 @@ def make_schema(param: dict) -> dict:
             schema["enum"] = param["enum"]
         if param.get("format"):
             schema["format"] = param["format"]
+        if desc:
+            schema["description"] = desc
         return schema
 
     # TYPE_HINTS lookup (name-based global overrides in config)
@@ -230,10 +240,11 @@ def make_schema(param: dict) -> dict:
             schema["enum"] = param["enum"]
         if param.get("format"):
             schema["format"] = param["format"]
+        if desc:
+            schema["description"] = desc
         return schema
 
     # Default
-    desc = param.get("description")
     schema = {"type": "string"}
     if desc:
         schema["description"] = desc
