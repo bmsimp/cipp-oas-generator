@@ -1,10 +1,10 @@
 {
   "summary": {
-    "PARTIAL": 184,
-    "FULL": 268,
-    "ORPHAN": 5,
-    "BLIND": 42,
-    "ARRAY_BODY": 2
+    "PARTIAL": 212,
+    "FULL": 300,
+    "BLIND": 45,
+    "ARRAY_BODY": 2,
+    "ORPHAN": 3
   },
   "tier_definitions": {
     "FULL": "Both API and frontend sources present; all params high confidence",
@@ -14,33 +14,20 @@
     "ORPHAN": "Frontend calls endpoint but no Invoke-*.ps1 found",
     "STUB": "No sources at all \u2014 sidecar-only documentation"
   },
-  "blind_endpoints": [],
+  "blind_endpoints": [
+    "ExecExtensionClearHIBPKey",
+    "ListGDAPContracts",
+    "ListOffboardTenants",
+    "ListReportBuilderTemplates",
+    "ListResellerRelationshipLink",
+    "RemoveCippQueue"
+  ],
   "orphan_endpoints": [
-    "AddStandardTemplate",
-    "ListCippQueue",
     "RemoveAntiPhishingFilter",
     "RemoveMalwareFilter",
     "RemoveSafeAttachmentsFilter"
   ],
   "probable_404s": [
-    {
-      "endpoint": "AddStandardTemplate",
-      "call_sites": [
-        "src/components/CippComponents/CippPolicyImportDrawer.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-AddStandardTemplate.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListCippQueue",
-      "call_sites": [
-        "src/components/CippTable/CippQueueTracker.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListCippQueue.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
     {
       "endpoint": "RemoveAntiPhishingFilter",
       "call_sites": [
@@ -71,39 +58,63 @@
   ],
   "orphan_delta": {
     "new": [],
-    "resolved": [
-      "AddCustomDomain",
-      "EditTenantGroup",
-      "RecoverPolicies"
-    ]
+    "resolved": []
   },
   "sidecar_candidates": [
+    "AddAppTemplate",
+    "AddCustomScript",
     "AddRoomList",
+    "AddScriptedAlert",
     "AddTenantAllowBlockList",
+    "AddTenantAllowBlockListTemplate",
     "ExecAddTenant",
+    "ExecCustomScript",
+    "ExecExtensionClearHIBPKey",
     "ExecPasswordConfig",
     "ExecRestoreBackup",
+    "ExecScheduleForwardingVacation",
+    "ExecScheduleOOOVacation",
     "ExecUpdateRefreshToken",
-    "PatchUser"
+    "ListGDAPContracts",
+    "ListOffboardTenants",
+    "ListReportBuilderTemplates",
+    "ListResellerRelationshipLink",
+    "PatchUser",
+    "RemoveCippQueue"
   ],
   "sidecar_candidates_by_reason": {
-    "blind": [],
+    "blind": [
+      "ExecExtensionClearHIBPKey",
+      "ListGDAPContracts",
+      "ListOffboardTenants",
+      "ListReportBuilderTemplates",
+      "ListResellerRelationshipLink",
+      "RemoveCippQueue"
+    ],
     "external_form_component": [],
-    "data_transform": [],
+    "data_transform": [
+      "AddCustomScript"
+    ],
     "constructed_body": [
+      "AddAppTemplate",
       "AddRoomList",
+      "AddScriptedAlert",
       "AddTenantAllowBlockList",
+      "AddTenantAllowBlockListTemplate",
       "ExecAddTenant",
+      "ExecCustomScript",
       "ExecPasswordConfig",
       "ExecRestoreBackup",
+      "ExecScheduleForwardingVacation",
+      "ExecScheduleOOOVacation",
       "ExecUpdateRefreshToken",
       "PatchUser"
     ]
   },
   "type_inference_coverage": {
-    "total_params": 2687,
-    "non_string_params": 507,
-    "pct_typed": 18.9
+    "total_params": 3039,
+    "non_string_params": 578,
+    "pct_typed": 19.0
   },
   "note": "blind_endpoints: API function found but zero params extracted. probable_404s: ORPHAN endpoints with active call sites \u2014 genuine runtime 404s in CIPP. orphan_delta.new: endpoints that became ORPHAN since last run \u2014 investigate immediately. sidecar_candidates = all endpoints without a sidecar that need one. type_inference_coverage.pct_typed: % params with a richer type than default 'string' \u2014 increases as sidecars and TYPE_HINTS improve."
 }

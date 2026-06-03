@@ -8,7 +8,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "defaultDomain parameter",
+      "description": "Pre-selects a domain when userAction is \"create\". LabelValue shape: { \"label\": \"contoso.com\", \"value\": \"contoso.com\" }. The value is the domain string. Accepts a plain string.",
       "confidence": "high"
     },
     {
@@ -16,7 +16,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "defaultDuration parameter",
+      "description": "Default JIT access duration. LabelValue shape: { \"label\": \"4 Hours\", \"value\": \"PT4H\" }. The value must be an ISO 8601 duration string. Common presets: \"PT1H\" (1 hr), \"PT4H\" (4 hrs), \"PT8H\" (8 hrs), \"P1D\" (1 day), \"P3D\", \"P7D\", \"P14D\", \"P30D\". Custom durations like \"PT2H30M\" are also valid. Cannot exceed the global MaxDuration set in JIT Admin Settings.",
       "confidence": "high"
     },
     {
@@ -24,7 +24,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "defaultExistingUser parameter",
+      "description": "Pre-selects a user when defaultUserAction is \"select\". LabelValue shape: { \"label\": \"User Display Name\", \"value\": \"<UPN or ObjectId>\" }. The PS1 accepts either a UPN or an ObjectId GUID as the value.",
       "confidence": "high"
     },
     {
@@ -32,7 +32,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "defaultExpireAction parameter",
+      "description": "Default expiration action for JIT sessions using this template. LabelValue shape: { \"label\": \"...\", \"value\": \"<action>\" }. Valid values: \"DisableUser\", \"DeleteUser\", \"RemoveRoles\" (select only), \"RemoveGroups\" (select only), \"RemoveRolesAndGroups\" (select only). The \"Remove*\" variants require defaultUserAction=\"select\".",
       "confidence": "high"
     },
     {
@@ -40,7 +40,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "defaultFirstName parameter",
+      "description": "Pre-fills the first name field when defaultUserAction is \"create\".",
       "confidence": "high"
     },
     {
@@ -48,7 +48,15 @@
       "in": "body",
       "required": false,
       "type": "boolean",
-      "description": "defaultForTenant parameter",
+      "description": "If true, marks this template as the default for the target tenant. Only one template can be the tenant default.",
+      "confidence": "high"
+    },
+    {
+      "name": "defaultGroups",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "Array of groups pre-selected in the template. LabelValue shape: { \"label\": \"Group Display Name\", \"value\": \"<ObjectId>\" }. The value must be the group's ObjectId (GUID). Stored as-is and applied when a JIT session is created from this template.",
       "confidence": "high"
     },
     {
@@ -56,7 +64,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "defaultLastName parameter",
+      "description": "Pre-fills the last name field when defaultUserAction is \"create\".",
       "confidence": "high"
     },
     {
@@ -64,7 +72,7 @@
       "in": "body",
       "required": false,
       "type": "array",
-      "description": "defaultNotificationActions parameter",
+      "description": "Default notification actions for JIT sessions created from this template. Array of strings. Valid values: \"Webhook\", \"email\", \"PSA\".",
       "confidence": "high"
     },
     {
@@ -72,7 +80,7 @@
       "in": "body",
       "required": false,
       "type": "LabelValue",
-      "description": "defaultRoles parameter",
+      "description": "Array of admin roles pre-selected in the template. LabelValue shape: { \"label\": \"Role Display Name\", \"value\": \"<ObjectId>\" }. The value must be the role's ObjectId (GUID). Retrieve available roles from GET /api/ListRoles?TenantFilter=<tenant>. Stored as-is and applied when a JIT session is created from this template.",
       "confidence": "high"
     },
     {
@@ -80,7 +88,16 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "defaultUserAction parameter",
+      "description": "Whether sessions created from this template target a new or existing user. Valid values: \"create\" (new user), \"select\" (existing user). When set to \"AllTenants\", only \"create\" is permitted.",
+      "confidence": "high",
+      "enum": ["create", "select"]
+    },
+    {
+      "name": "defaultUsageLocation",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "Default usage location for new users created from this template. LabelValue shape: { \"label\": \"Canada\", \"value\": \"CA\" }. The value must be an ISO 3166-1 alpha-2 country code. Accepts a plain country code string. PS1 unwraps .value with fallback to the raw string.",
       "confidence": "high"
     },
     {
@@ -88,7 +105,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "defaultUserName parameter",
+      "description": "Pre-fills the username prefix field when defaultUserAction is \"create\".",
       "confidence": "high"
     },
     {
@@ -96,7 +113,7 @@
       "in": "body",
       "required": false,
       "type": "boolean",
-      "description": "generateTAPByDefault parameter",
+      "description": "If true, JIT sessions created from this template will generate a Temporary Access Pass instead of a password. Only applies when defaultUserAction=\"create\".",
       "confidence": "high"
     },
     {
@@ -104,7 +121,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "reasonTemplate parameter",
+      "description": "Default reason/justification text pre-filled when creating a JIT session from this template.",
       "confidence": "high"
     },
     {
@@ -112,7 +129,7 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "templateName parameter",
+      "description": "Unique name for this template within the target tenant. Required.",
       "confidence": "high"
     },
     {
@@ -120,9 +137,9 @@
       "in": "body",
       "required": false,
       "type": "string",
-      "description": "tenantFilter parameter",
+      "description": "Target tenant domain or GUID, or \"AllTenants\" to create a global template. \"AllTenants\" templates cannot use defaultUserAction=\"select\".",
       "confidence": "high"
     }
   ],
-  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence. defaultGroups and defaultUsageLocation added 2026-06-03 — present in PS1/frontend but missing from original sidecar. All LabelValue descriptions updated with valid values and structure. ExpireAction enum values sourced from add.jsx."
 }
